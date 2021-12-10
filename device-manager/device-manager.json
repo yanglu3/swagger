@@ -1,0 +1,115 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Device manager",
+    "description" : "This API handles operations relating to drones and AWS IoT services",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/AirMatrix1/Device-manager/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "device manager",
+    "description" : "Operations involving devices and AWS IoT service"
+  } ],
+  "paths" : {
+    "/drone-models" : {
+      "get" : {
+        "tags" : [ "device manager" ],
+        "summary" : "returns list of supported drone models",
+        "description" : "gets the supported drone models",
+        "operationId" : "getDroneModels",
+        "responses" : {
+          "200" : {
+            "description" : "list of supported drone models",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/DroneModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "MissionType" : {
+        "type" : "string",
+        "enum" : [ "Delivery", "Passenger", "Multi-use", "Emergency" ]
+      },
+      "DroneModel" : {
+        "required" : [ "id", "manufacturer", "max_altitude", "max_ground_velocity", "max_operating_temp", "max_payload", "min_operating_temp", "mission_types", "name", "weight", "width", "wind_resistance_continuous", "wind_resistance_gusts" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "cf7e2f0f-a774-49e5-82fb-f7de65196680"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "IF1000 Hexacopter (99Wh x 6)"
+          },
+          "manufacturer" : {
+            "type" : "string",
+            "example" : "Inspired Flight"
+          },
+          "weight" : {
+            "type" : "number",
+            "description" : "weight of drone in kg",
+            "format" : "double",
+            "example" : 6.6
+          },
+          "width" : {
+            "type" : "number",
+            "format" : "double",
+            "example" : 1.375
+          },
+          "max_payload" : {
+            "type" : "number",
+            "example" : 2.0
+          },
+          "max_altitude" : {
+            "type" : "number",
+            "example" : 1500
+          },
+          "max_ground_velocity" : {
+            "type" : "integer",
+            "example" : 18
+          },
+          "wind_resistance_continuous" : {
+            "type" : "integer",
+            "example" : 10
+          },
+          "wind_resistance_gusts" : {
+            "type" : "integer",
+            "example" : 12
+          },
+          "min_operating_temp" : {
+            "type" : "integer",
+            "example" : -10
+          },
+          "max_operating_temp" : {
+            "type" : "integer",
+            "example" : 45
+          },
+          "mission_types" : {
+            "type" : "array",
+            "example" : [ "Delivery", "Multi-use" ],
+            "items" : {
+              "$ref" : "#/components/schemas/MissionType"
+            }
+          }
+        },
+        "description" : "drone model"
+      }
+    }
+  }
+}
